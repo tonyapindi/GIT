@@ -1,0 +1,48 @@
+---
+title: "Untitled"
+author: "Analysis"
+date: "2024-01-20"
+output: pdf_document
+---
+
+Introduction
+The world of music is very dynamic and over the years, it has undergone many changes especially with the introduction of digital streaming. Among the many digital streaming services, Spotify is one of the largest platforms in the world currently available because it hosts an extensive library of millions of tracks serving as a cultural soundscape for all its users worldwide. With time, as the musical preferences continue to shape and get shaped by the trends in the society, it is important to understand the intricacies which best define and explain the most popular songs within the digital landscape.
+The purpose of this report is to conduct an analysis of the musical attributes which distinguish the top 100 tracks of Spotify. Musical is most often referred as a universal language which resonates with different people across the world, permeating into the different cultures of the world. Therefore, it is important to understand the quantitative aspects that contribute to the popularity of a song in a data-driven manner. The Spotify database is a rich repository with many genres, giving enough data for the required analysis and by analysing the curated list of the top 100 tracks; this analysis will be able to show the patterns and trends which define the excellence of music in the digital field. 
+
+Background
+The music industry has been redefined during the digital age on factors that include how music gets produced, consumed and popularized. Spotify is one of the leading companies within this revolution that are leading it making it an integral part of the music industry currently thus an important part of contemporary musical culture (Hodgson, 2021). As the platform has an extensive array of songs, understanding the determinants of the most popular tracks within the top 100 therefore becomes an essential endeavour which provides more insights into the evolving field of music consumption, creation and reception.
+Music plays an important aspect in the current world. Spotify uses different machine learning algorithms to try and understand the different tastes exhibited by their users and from this, they use recommender algorithms to suggest different music to different people. This is an important aspect that assists the company to operate better since their users will always get the type of music that they prefer as opposed to being exposed to all types of music which improves their overall satisfaction with the platform (Chodos, 2019). This understanding of how Spotify operates is very integral because the manner in which the company understands their clients is not only based on the musical genre alone, but also on other musical characteristics as well. 
+
+
+Research Question
+The research question for this paper is: 
+What musical attributes that are associated with the top 100 music on Spotify?
+The data to be used for this analysis will be from Spotify and it was obtained from Kaggle (2022). This data has 14 columns which represent different attributes of the dataset. These are some of the characteristics of the dataframe:
+•	acousticness: [0–1] Confidence measure of whether the track is acoustic.
+•	danceability: [0–1] Describes how suitable a track is for dancing based on musical attributes including tempo, rhythm, stability, beat strength, and overall regularity.
+•	energy: [0–1] Perceptual measure of intensity and activity. Energetic tracks feel fast, loud, and noisy (e.g. death metal: high energy, Bach prelude: low energy).
+•	instrumentalness: [0–1] Predicts whether a track contains no vocals (values above 0.5 represent instrumental tracks whereas rap songs would have a score close to 0).
+•	liveness: [0–1] Detects the presence of an audience in the recording.
+•	loudness: [-60–0 dB] The average volume across an entire track.
+•	speechiness: [0–1] Detects the presence of spoken words in a track (values above 0.66 describe tracks that are probably made entirely of spoken words, 0.33–0.66 describe tracks that may contain both music and speech, and values below 0.33 most likely represent music and other non-speech-like tracks).
+•	valence: [0–1] Describes the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).
+•	tempo: [0–300 BPM] The speed or pace of a given piece, as derived from the estimated average beat duration.
+Methodology
+This analysis will follow a quantitative approach in which explanatory data analysis (EDA) will get conducted together with a correlation matrix being created for the dataset. The analysis will allow for a better understanding of the dataset to assist in answering the research question. 
+
+
+Analysis and Results
+
+```{r setup, include=FALSE}
+library(readr)
+Top_100_most_Streamed_Sheet1 <- read_csv("Top 100 most Streamed - Sheet1.csv")
+dataset <- Top_100_most_Streamed_Sheet1
+head(dataset)
+tail(dataset)
+summary(dataset)
+
+```
+
+```{r}
+correlation_matrix <- cor(dataset[, c("year", "beats.per.minute", "energy", "danceability", "loudness.dB", "liveness", "valance", "length", "acousticness", "speechiness", "popularity")])
+```

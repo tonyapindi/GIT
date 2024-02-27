@@ -1,0 +1,105 @@
+---
+title: "Untitled"
+author: "Analysis"
+date: "2023-07-03"
+output: html_document
+---
+
+---
+title: "Untitled"
+author: "Analysis"
+date: "2023-07-03"
+output: html_document
+---
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load the data
+library (readxl)
+library(readxl)
+
+# Specify the file path
+file_path <- "C:\\Users\\Apindi\\Documents\\DATA.xlsx"
+
+# Load the Excel file
+DATA <- read_excel(file_path)
+
+```
+
+
+
+
+```{r}
+library(dplyr)
+
+# Summarize demographic variables
+table(DATA$Age)
+table(DATA$Gender)
+
+# Summarize physical activity levels
+table(DATA$`Physical Activity Level`)
+
+# Summarize cholesterol measurements
+summary(DATA$`Total Cholesterol (mg/dL)`)
+summary(DATA$`LDL Cholesterol (mg/dL)`)
+summary(DATA$`HDL Cholesterol (mg/dL)`)
+summary(DATA$`Triglycerides (mg/dL)`)
+
+```
+```{r}
+# Create a new variable "Group" in your dataset
+DATA$Group <- NA
+
+# Assign group membership based on specific criteria
+# For example, participants with ID 1 to 50 are assigned to the experimental group
+# and participants with ID 51 to 100 are assigned to the control group
+DATA$Group[1:50] <- "experimental"
+DATA$Group[51:100] <- "control"
+
+```
+
+```{r}
+# Assuming you have a variable named "Group" indicating the experimental and control groups (e.g., 0 = Control, 1 = Experimental). FoR EXPERIMENTAL GROUP
+
+# Perform a t-test for Total Cholesterol
+t.test(DATA$`Total Cholesterol (mg/dL)` ~ DATA$Group, data = DATA)
+
+# Perform a t-test for LDL Cholesterol
+t.test(DATA$`LDL Cholesterol (mg/dL)` ~ DATA$Group, data = DATA)
+
+# Perform a t-test for HDL Cholesterol
+t.test(DATA$`HDL Cholesterol (mg/dL)` ~ DATA$Group, data = DATA)
+
+# Perform a t-test for Triglycerides
+t.test(DATA$`Triglycerides (mg/dL)` ~ DATA$Group, data = DATA)
+
+```
+
+
+```{r}
+library(car)
+```
+
+```{r}
+
+# Perform an ANOVA for Total Cholesterol
+anova(lm(`Total Cholesterol (mg/dL)` ~ Group, data = DATA))
+
+# Perform an ANOVA for LDL Cholesterol
+anova(lm(`LDL Cholesterol (mg/dL)` ~ Group, data = DATA))
+
+# Perform an ANOVA for HDL Cholesterol
+anova(lm(`HDL Cholesterol (mg/dL)` ~ Group, data = DATA))
+
+# Perform an ANOVA for Triglycerides
+anova(lm(`Triglycerides (mg/dL)` ~ Group, data = DATA))
+
+```
+
+```{r}
+#linear regression
+
+fit<-cholesterol ~ physical_activity_level + age + gender + triglycerides
+fit<-lm(`Total Cholesterol (mg/dL)` ~`Physical Activity Level` +Age + Gender, data = DATA)
+summary (fit)
+```

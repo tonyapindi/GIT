@@ -1,0 +1,25 @@
+---
+title: "Non-Parametric Test"
+author: "Apindi Tony Nyumba AST/08/19"
+date: "5/15/2021"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### KRUSKAL WALLIS TEST
+``` {r test, echo=T}
+ID <- c(1,2,3,4,5,6,7,8,11,12,13,14,15,16,17,9,21,22,23,18,24,10,25,26,19,27,28,20,29,30)
+length (ID)
+Reaction_Time<- c(0.37,0.38,0.61,0.78,0.83,0.86,0.9,0.95,0.98,1.11,1.27,1.32,1.44,1.45,1.46,1.63,1.69,1.71,1.75,1.76,1.83,1.97,1.97,2.53,2.56,2.66,2.91,3.07,3.28,3.47)
+length (Reaction_Time)
+Drink<- factor(c("water","water","water","water","water","water","water","water","coffee","coffee","coffee","coffee","coffee","coffee","coffee","water","alcohol","alcohol","alcohol","coffee","alcohol","water","alcohol","alcohol","coffee","alcohol","alcohol","coffee","alcohol","alcohol"))
+length (Drink)
+
+Rank<- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22.5,22.5,24,25,26,27,28,29,30)
+length (Rank)
+cancer<- cbind(ID,Reaction_Time,Drink,Rank)
+kruskal.test(Reaction_Time~Drink,data=cancer)
+```

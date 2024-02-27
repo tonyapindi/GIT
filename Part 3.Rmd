@@ -1,0 +1,127 @@
+---
+title: "Part 3"
+output:
+  html_document:
+    df_print: paged
+date: "2022-12-18"
+---
+
+```{r}
+#Explanatory Data Analysis
+is.na(toronto2)
+head(toronto2)
+str(toronto2)
+summary(toronto2)
+
+#Plotting boxplots and outliers for the variables 
+boxplot(toronto2$Businesses, main="Boxplot for Businesses")$out
+boxplot(toronto2$`Child`, main="Boxplot for Child")$out
+boxplot(toronto2$`Debt`, main="Boxplot for Debt")$out
+boxplot(toronto2$`Home`, main="Boxplot for Home")$out
+boxplot(toronto2$`Local`, main="Boxplot for Local")$out
+boxplot(toronto2$`Social`, main="Boxplot for Social")$out
+
+#plotting histograms for the variables
+hist(toronto2$Businesses, main="Histogram for Businesses")
+hist(toronto2$`Child`, main="Histogram for Child")
+hist(toronto2$`Debt`, main="Histogram for Debt")
+hist(toronto2$`Home`, main="Histogram for Home")
+hist(toronto2$`Local`, main="Histogram for Local")
+hist(toronto2$`Social`, main="Histogram for Social")
+
+#making scatter plots for the variables
+plot1<- plot(toronto2$Businesses, toronto2$`Home`)
+plot1
+
+plot2<- plot(toronto2$`Child`, toronto2$`Home`)
+plot2
+
+plot3<- plot(toronto2$`Debt`, toronto2$`Home`)
+plot3
+
+plot4<- plot(toronto2$`Local`, toronto2$`Home`)
+plot4
+
+plot5<- plot(toronto2$`Social`, toronto2$`Home`)
+plot5
+
+
+#checking for correlation
+cor(toronto2$Businesses,toronto2$`Home`, method='pearson')
+cor(toronto2$`Child`, toronto2$`Home`, method='pearson')
+cor(toronto2$`Debt`, toronto2$`Home`, method='pearson')
+cor(toronto2$`Local`, toronto2$`Home`, method='pearson')
+cor(toronto2$`Social`, toronto2$`Home`, method='pearson')
+
+install.packages("ggplot2")
+library(ggplot2)
+ggplot(toronto2,aes(x=Businesses,y=Home))+
+  geom_point()
+
+ggplot(toronto2, aes(x=Child, y=Home))+
+  geom_point()
+
+ggplot(toronto2, aes(x=Debt, y=Home))+
+  geom_point()
+
+ggplot(toronto2, aes(x=Local, y=Home))+
+  geom_point()
+
+ggplot(toronto2, aes(x=Social, y=Home))+
+  geom_point()
+```
+
+```{r}
+install.packages("caTools")
+library(caTools)
+#Regression
+#Splitting the data
+set.seed(105)
+sample<-sample.split(toronto2$`Home`,
+                     SplitRatio =0.75)
+train_data<-subset(toronto2, sample==T)
+test_data<- subset(toronto2, sample==F)
+
+#checking the split data
+dim(train_data)
+dim(test_data)
+```
+
+```{r}
+#model building
+model1<-lm("Home~Businesses+Child+Debt+Local+Social", data=toronto2)
+summary(model1)
+#rsquare
+r_sq1<-summary(model1)$r.squared
+r_sq1
+
+
+model2<-lm("Home~Debt+Social",data=toronto2)
+summary(model2)
+#rsquare
+r_sq2<-summary(model2)$r.squared
+r_sq2
+```
+
+```{r}
+#ANOVA
+anova(model2)
+```
+
+```{r}
+#checking assumption of independence 
+install.packages("car")
+library(car)
+dwt(model2)
+    
+#checking assumption of multicollinearity
+vif(model2)
+    #tolerance
+1/vif(model2)
+    #mean vif
+mean(vif(model2))
+    
+#Checking assumptions of residuals
+plot(model2)
+
+```
